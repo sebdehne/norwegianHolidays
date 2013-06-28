@@ -1,4 +1,22 @@
-(function () {
+/**
+ * Simple module which calculates all norwegian holidays.
+ *
+ * If possible, it exports as an AMD module. Otherwise adds 'norwegianHolidays' to 'this' (typical global scope).
+ *
+ * This module has the following methods:
+ *
+ * genHolidaysForYear(year) - Creates and returns an array of date objects, each of them representing a valid holiday
+ * isHoliDay(date)          - Returns true if the provided date object is a holiday, otherwise false
+ * isWeekendDay(date)       - Returns true if the provided date object is a weekend day
+ */
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else {
+        root.norwegianHolidays = factory();
+    }
+}(this, function () {
+    'use strict';
 
     function getHolidaysFor(year) {
 
@@ -69,10 +87,10 @@
     }
 
 
-    var norwegianHolidays = {
+    return {
 
         /**
-         * Creates and returns an array with date objects which represent a holiday
+         * Creates and returns an array of date objects, each of them representing a valid holiday
          *
          * @param year number representing a year
          */
@@ -102,7 +120,7 @@
         },
 
         /**
-         * Checks whether a provided date objects is a weekend day
+         * Checks whether a provided date object is a weekend day
          *
          * @param date
          * @returns {boolean}
@@ -112,11 +130,4 @@
         }
     };
 
-    if (typeof define === "function" && define.amd) {
-        define("norwegianHolidays", [], function () {
-            return norwegianHolidays;
-        });
-    } else {
-        window.norwegianHolidays = norwegianHolidays;
-    }
-})();
+}));
